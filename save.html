@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+</style>
+
+<head>
+</head>
+
+<body>
+    <div id=content style="width:150px;height:150px;border:1px lightblue solid">
+        <span>Hello world</span>
+        <br>
+        <span>
+            <img src="images/fu2.jpg" alt="" id="myCanvas" style="width:100px;height:100px">
+        </span>
+        <button id="btnSave">save</button>
+    </div>
+
+    <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="js/html2canvas.js"></script>
+    <script>
+        $("#btnSave").click(function () {
+            html2canvas($("#content"), {
+                onrendered: function (canvas) {
+                    document.body.appendChild(canvas);
+                    var dataURL = canvas.toDataURL("image/png");
+                    var imgUri = canvas.toDataURL("image/png").replace("image/png",
+                        "image/octet-stream"); // 获取生成的图片的url  
+                    //本地保存
+
+                    //动态生成一个a标签
+                    var a = document.createElement("a");
+                    a.href = imgUri;
+                    a.download = "1.png";
+                    var event = document.createEvent('MouseEvents');
+                    event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false,
+                        false, false, 0, null);
+                    a.dispatchEvent(event);
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>
